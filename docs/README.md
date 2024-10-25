@@ -78,11 +78,11 @@ Finally, connect each servo to the circuit. Mind the wiring (usually, brown = GN
 The device boots up when you connect it to the power supply, like the Handy. You'll need to pair it
 with your PC via Bluetooth to use it.
 
-The `bridge.exe` program connects the device to Intiface via WSDM. Right now this only works with
+The [`bridge.exe`] program connects the device to Intiface via WSDM. Right now this only works with
 [Intiface Engine]; you'll get weird connection drops if you try it with Intiface Central.
 
-Copy `buttplug-user-device-config.json` into the directory where `intiface-engine.exe` is, then `cd`
-into the same directory and run:
+Copy [`buttplug-user-device-config.json`] into the directory where `intiface-engine.exe` is, then
+`cd` into the same directory and run:
 
 ```
 .\intiface-engine.exe --websocket-port 12345 --use-device-websocket-server --user-device-config-file .\buttplug-user-device-config.json
@@ -115,6 +115,7 @@ completely dry.
 [`wheel.stl`]: https://github.com/Sauceke/wheels/releases/latest/download/wheel.stl
 [`mold.stl`]: https://github.com/Sauceke/wheels/releases/latest/download/mold.stl
 [`firmware.ino`]: https://github.com/Sauceke/wheels/releases/latest/download/firmware.ino
+[`bridge.exe`]: https://github.com/Sauceke/wheels/releases/latest/download/bridge.exe
 [`buttplug-user-device-config.json`]:
   https://github.com/Sauceke/wheels/releases/latest/download/buttplug-user-device-config.json
 [Intiface Engine]: https://github.com/intiface/intiface-engine/releases
