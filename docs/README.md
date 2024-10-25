@@ -2,7 +2,13 @@
 
 Two silicone wheels you can stick things between.
 
+Demo (NSFW): https://files.catbox.moe/9yxkkc.mp4
+
 # How to build
+
+I wouldn't recommend building it yet. This is still in its PoC stage, and there is a lot of
+potential for improvement. That said, it is already perfectly functional, and if you'd like to try
+it, here's how to make one.
 
 ## Parts
 
