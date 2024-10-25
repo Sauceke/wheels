@@ -13,9 +13,9 @@ Two silicone wheels you can stick things between.
   spacing of `14 mm` (or change the `screw_holes`, `screw_hole_r` and `screw_hole_offset` parameters
   in `wheel.scad` to match whatever you have)
 - low-impedance `1000 uF` capacitor
-- 5V power adapter with enough current output to power the servos and the ESP. Multiply the stall
-  current of your servo by two, and add `1 A`. That's how many amps you need. For my FS5113R servos,
-  I needed a `4 A` supply.
+- 5V power adapter with enough max current to power the servos and the ESP. Multiply the stall
+  current of your servo by two, and add `1 A`. That's how many amps you will need. For my FS5113R
+  servos, I needed a `4 A` supply.
 - power plug for the adapter
 - 1x [`frame.stl`]
 - 1x [`vessel.stl`] (might need two if it breaks during unmolding)
@@ -59,15 +59,18 @@ While flashing the firmware, you might need to hold the `BOOT` button on the ESP
 
 ## Final Assembly
 
-Put the two servos in `frame.stl`. Secure each with a zip tie (the grooves on the frame are there to
-hold the zip ties).
+Put the two servos in `frame.stl`. Secure each with a zip tie (the grooves on the frame are for
+holding the zip ties).
 
 Screw each wheel on a servo through the servo disc.
 
 Finally, connect each servo to the circuit. Mind the wiring (usually, brown = GND, red = 5V, orange
-= PWM).
+= pulse).
 
 # How to use
+
+The device boots up when you connect it to the power supply, like the Handy. You'll need to pair it
+with your PC via Bluetooth to use it.
 
 The `bridge.exe` program connects the device to Intiface via WSDM. Right now this only works with
 [Intiface Engine]; you'll get weird connection drops if you try it with Intiface Central.
@@ -89,6 +92,10 @@ featureful for the time being.
 
 Based on personal tests, I recommend a thick lube with lots of humectant so it won't dry out that
 fast.
+
+You can adjust the clearance between the wheels through the `spacing` parameter in `frame.stl`. In
+future releases I should try to make this mechanically adjustable or spring loaded so that you won't
+have to waste plastic trying to find the ideal size.
 
 # How to clean
 
