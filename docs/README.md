@@ -93,7 +93,7 @@ featureful for the time being.
 Based on personal tests, I recommend a thick lube with lots of humectant so it won't dry out that
 fast.
 
-You can adjust the clearance between the wheels through the `spacing` parameter in `frame.stl`. In
+You can adjust the clearance between the wheels through the `spacing` parameter in `frame.scad`. In
 future releases I should try to make this mechanically adjustable or spring loaded so that you won't
 have to waste plastic trying to find the ideal size.
 
