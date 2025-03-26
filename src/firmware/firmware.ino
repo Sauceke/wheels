@@ -3,9 +3,8 @@
 #include <BLEUtils.h>
 #include <BLEServer.h>
 
-#define SERVICE_UUID "0f203ee2-153c-cfd3-0448-00a21d340a43"
-#define LEFT_UUID "ca88902b-6d8a-79de-cde5-8f30b102cac9"
-#define RIGHT_UUID "732995fc-cdbe-9aa2-d000-6e6ead12e651"
+#define SERVICE_UUID "40ee1111-63ec-4b7f-8ce7-712efd55b90e"
+#define TX_UUID "40ee2222-63ec-4b7f-8ce7-712efd55b90e"
 
 const int leftPin = 25;
 const int rightPin = 26;
@@ -15,8 +14,7 @@ Servo rightWheel;
 
 BLEServer *server;
 BLEService *service;
-BLECharacteristic *leftChara;
-BLECharacteristic *rightChara;
+BLECharacteristic *txChara;
 BLEAdvertising *advertising;
 
 class ServerCallbacks : public BLEServerCallbacks {
@@ -25,18 +23,17 @@ class ServerCallbacks : public BLEServerCallbacks {
   }
 };
 
-
-class LeftCallbacks : public BLECharacteristicCallbacks {
+class TxCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *chara, esp_ble_gatts_cb_param_t *param) {
-    int value = chara->getValue().toInt();
-    leftWheel.write(90 + value);
-  }
-};
-
-class RightCallbacks : public BLECharacteristicCallbacks {
-  void onWrite(BLECharacteristic *chara, esp_ble_gatts_cb_param_t *param) {
-    int value = chara->getValue().toInt();
-    rightWheel.write(90 - value);
+    String msg = chara->getValue();
+    int data_left = (unsigned char)msg.charAt(1);
+    int data_right = (unsigned char)msg.charAt(2);
+    int dir_left = data_left > 127 ? 1 : -1;
+    int dir_right = data_right > 127 ? -1 : 1;
+    int speed_left = min(data_left & 127, 90);
+    int speed_right = min(data_right & 127, 90);
+    leftWheel.write(90 + speed_left * dir_left);
+    rightWheel.write(90 + speed_right * dir_right);
   }
 };
 
@@ -53,14 +50,12 @@ void setup() {
 }
 
 void initServer() {
-  BLEDevice::init("Wheels");
+  BLEDevice::init("UFO-TW");
   server = BLEDevice::createServer();
   server->setCallbacks(new ServerCallbacks());
   service = server->createService(SERVICE_UUID);
-  leftChara = service->createCharacteristic(LEFT_UUID, BLECharacteristic::PROPERTY_WRITE);
-  rightChara = service->createCharacteristic(RIGHT_UUID, BLECharacteristic::PROPERTY_WRITE);
-  leftChara->setCallbacks(new LeftCallbacks());
-  rightChara->setCallbacks(new RightCallbacks());
+  txChara = service->createCharacteristic(TX_UUID, BLECharacteristic::PROPERTY_WRITE);
+  txChara->setCallbacks(new TxCallbacks());
   service->start();
   server->getAdvertising()->addServiceUUID(SERVICE_UUID);
   server->getAdvertising()->start();
