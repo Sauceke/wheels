@@ -1,2 +1,0 @@
-websockets==13.1
-bleak==0.22.3

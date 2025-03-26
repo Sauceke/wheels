@@ -32,30 +32,9 @@ jobs:
           name: cad-assets
           path: assets
 
-  build-bridge:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Make assets directory
-        run: mkdir assets
-      - name: Run PyInstaller
-        run: |
-          cd src/bridge
-          pip install pyinstaller
-          pip install -r requirements.txt
-          pyinstaller bridge.spec
-          cp dist/bridge.exe ../../assets
-      - name: Upload assets
-        uses: actions/upload-artifact@v3
-        with:
-          name: bridge-assets
-          path: assets
-
   create-release:
     needs:
       - build-cad
-      - build-bridge
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,9 +44,7 @@ jobs:
         with:
           path: assets
       - name: Copy stuff
-        run: |
-          cp src/bridge/buttplug-user-device-config.json assets
-          cp src/firmware/firmware.ino assets
+        run: cp src/firmware/firmware.ino assets
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
